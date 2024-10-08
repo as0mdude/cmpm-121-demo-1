@@ -47,5 +47,17 @@ const header = document.createElement("h1");
 header.innerHTML = gameName;
 app.append(header);
 
-// Automatically increment the counter every second
-setInterval(updateCounter, 1000);
+// Replacing setInterval with requestAnimationFrame
+let lastTime = 0;
+
+function incrementCounter(currentTime: number) {
+    if (lastTime !== 0) {
+        const deltaTime = currentTime - lastTime;  // Time passed since last frame in milliseconds
+        counter += deltaTime / 1000;               // Increase by the fraction of a second
+        counterDiv.innerText = `${counter.toFixed(0)} launches 🚀`; // Update the display with the integer value
+    }
+    lastTime = currentTime;                        // Update the lastTime for the next frame
+    requestAnimationFrame(incrementCounter);       // Request the next frame
+}
+
+requestAnimationFrame(incrementCounter);
