@@ -34,18 +34,32 @@ button.style.padding = '10px 20px';  // Add some padding for a nicer appearance
 button.style.fontSize = '16px';      // Adjust font size
 button.style.cursor = 'pointer';  
 
-// Function to update the counter
-const updateCounter = () => {
+// Function to update the counter display
+const updateCounterDisplay = () => {
+    counterDiv.innerText = `${counter.toFixed(2)} launches 🚀`;
+};
+
+// Add an event listener to the button to update the counter on click
+button.addEventListener('click', () => {
     counter += 1;
-    counterDiv.innerText = `${counter} launches 🚀`;
-  };
-  
-  // Add an event listener to the button to update the counter on click
-  button.addEventListener('click', updateCounter);
+    updateCounterDisplay();
+});
 
-const header = document.createElement("h1");
-header.innerHTML = gameName;
-app.append(header);
+let lastFrameTime = performance.now(); // Initialize with the time of the first frame
 
-// Automatically increment the counter every second
-setInterval(updateCounter, 1000);
+// Function to increment the counter based on elapsed time
+const growCounter = (currentTime: DOMHighResTimeStamp) => {
+    const timeElapsed = currentTime - lastFrameTime; // Calculate time elapsed since last frame
+    lastFrameTime = currentTime;
+    
+    // Calculate the fraction to increment based on elapsed time
+    counter += timeElapsed / 1000; // Since we want to increase by 1 unit per second
+
+    updateCounterDisplay();
+
+    // Request the next frame
+    requestAnimationFrame(growCounter);
+};
+
+// Start the animation loop
+requestAnimationFrame(growCounter);
