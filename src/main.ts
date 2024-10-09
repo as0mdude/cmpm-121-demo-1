@@ -71,7 +71,7 @@ requestAnimationFrame(incrementCounter);
 const button2 = document.createElement('button');
 // Optionally set an ID or class if you need to style it later
 button2.id = "upgrade";
-button2.innerHTML = "Upgrade";
+button2.innerHTML = "Upgrade: +0.1 (10 points)";
 
 // Append the button to the body (or to any other container)
 document.body.appendChild(button2);
@@ -90,17 +90,56 @@ const checkUpgradeAvailability = () => {
         button2.disabled = false;
         button2.style.cursor = 'pointer';
         button2.style.backgroundColor = ''; // Restore default color
-    }
-    if(counter<10){
+    }else{
         button2.disabled = true;
     }
+    
+    if(counter>=100){
+        button3.disabled = false;
+        button3.style.cursor = 'pointer';
+        button3.style.backgroundColor = ''; // Restore default color
+    }else{
+        button3.disabled = true;
+    }
+    
 };
 
 const performUpgrades = () =>{
     counter-=10;
-    currentAdd+=1;
+    currentAdd+=0.1;
 
 }
 
 button2.addEventListener('click', performUpgrades);
+
+// Create a new button element
+const button3 = document.createElement('button');
+// Optionally set an ID or class if you need to style it later
+button3.id = "upgrade";
+button3.innerHTML = "Upgrade: +2.0 (100 points)";
+
+// Append the button to the body (or to any other container)
+document.body.appendChild(button3);
+button3.style.position = 'absolute';
+button3.style.top = '40%';
+button3.style.left = '50%';
+button3.style.transform = 'translate(-50%, -50%)';
+button3.style.padding = '10px 20px';  // Add some padding for a nicer appearance
+button3.style.fontSize = '16px';      // Adjust font size
+button3.style.cursor = 'pointer';  
+// Create a new button element
+const button4 = document.createElement('button');
+// Optionally set an ID or class if you need to style it later
+button4.id = "upgrade";
+button4.innerHTML = "Upgrade: +50.0 (1000 points)";
+
+// Append the button to the body (or to any other container)
+document.body.appendChild(button4);
+button4.style.position = 'absolute';
+button4.style.top = '50%';
+button4.style.left = '50%';
+button4.style.transform = 'translate(-50%, -50%)';
+button4.style.padding = '10px 20px';  // Add some padding for a nicer appearance
+button4.style.fontSize = '16px';      // Adjust font size
+button4.style.cursor = 'pointer';  
 
