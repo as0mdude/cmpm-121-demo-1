@@ -1,145 +1,119 @@
 import "./style.css";
 
 const app: HTMLDivElement = document.querySelector("#app")!;
-
-const gameName = "Vincent Fu";
-
-let currentAdd: number = 1;
-document.title = gameName;
-let counter: number = 0;
-const counterDiv = document.createElement('div');
-counterDiv.id = 'counterDisplay';
-counterDiv.style.textAlign = 'center'; // Center-align the text within the div
-counterDiv.style.marginTop = '20px'; // Add margin to separate from the button
-counterDiv.style.fontSize = '18px'; // Set a larger font size for visibility
-document.body.appendChild(counterDiv);
-
-// Set initial counter text
-counterDiv.innerText = `${counter} launches 🚀`;
-
-// Create a new button element
-const button = document.createElement('button');
-
-// Set the inner text or HTML of the button
-button.innerHTML = "🚀 My button";
-
-// Optionally set an ID or class if you need to style it later
-button.id = "funButton";
-
-// Append the button to the body (or to any other container)
-document.body.appendChild(button);
-button.style.position = 'absolute';
-button.style.top = '70%';
-button.style.left = '50%';
-button.style.transform = 'translate(-50%, -50%)';
-button.style.padding = '10px 20px';  // Add some padding for a nicer appearance
-button.style.fontSize = '16px';      // Adjust font size
-button.style.cursor = 'pointer';  
-
-// Function to update the counter
-const updateCounter = () => {
-    counter += currentAdd;
-    counterDiv.innerText = `${counter} launches 🚀`;
-  };
-  
-  // Add an event listener to the button to update the counter on click
-button.addEventListener('click', updateCounter);
+const gameName = "Clicker game";
 
 const header = document.createElement("h1");
 header.innerHTML = gameName;
 app.append(header);
 
+let currentAdd: number = 1;
+let counter: number = 0;
+let upgradesBought = { upgrade1: 0, upgrade2: 0, upgrade3: 0 }; // Track number of items bought
+document.title = "Vincent Fu";
 
-let lastTime = 0;
+// Create display for counter
+const counterDiv = document.createElement('div');
+counterDiv.id = 'counterDisplay';
+counterDiv.style.textAlign = 'center';
+counterDiv.style.marginTop = '20px';
+counterDiv.style.fontSize = '18px';
+document.body.appendChild(counterDiv);
+counterDiv.innerText = `${counter} launches 🚀`;
 
-function incrementCounter(currentTime: number) {
-    if (lastTime !== 0) {
-        const deltaTime = currentTime - lastTime;  
-        counter += deltaTime / 1000;              
-        counterDiv.innerText = `${counter.toFixed(0)} launches 🚀`;
-        
-        checkUpgradeAvailability();
-        
-    }
-    lastTime = currentTime;                        
-    requestAnimationFrame(incrementCounter);     
-}
-requestAnimationFrame(incrementCounter);
+// Create display for current growth rate
+const growthRateDiv = document.createElement('div');
+growthRateDiv.id = 'growthRateDisplay';
+growthRateDiv.style.textAlign = 'center';
+growthRateDiv.style.marginTop = '10px';
+growthRateDiv.style.fontSize = '16px';
+document.body.appendChild(growthRateDiv);
+growthRateDiv.innerText = `Current Growth Rate: ${currentAdd} 🚀/click`;
 
+// Create display for items bought
+const itemsBoughtDiv = document.createElement('div');
+itemsBoughtDiv.id = 'itemsBoughtDisplay';
+itemsBoughtDiv.style.textAlign = 'center';
+itemsBoughtDiv.style.marginTop = '10px';
+itemsBoughtDiv.style.fontSize = '16px';
+document.body.appendChild(itemsBoughtDiv);
+itemsBoughtDiv.innerText = `Bought: Upgrade1: ${upgradesBought.upgrade1}, Upgrade2: ${upgradesBought.upgrade2}, Upgrade3: ${upgradesBought.upgrade3}`;
 
-// Create a new button element
-const button2 = document.createElement('button');
-// Optionally set an ID or class if you need to style it later
-button2.id = "upgrade";
-button2.innerHTML = "Upgrade: +0.1 (10 points)";
-
-// Append the button to the body (or to any other container)
-document.body.appendChild(button2);
-button2.style.position = 'absolute';
-button2.style.top = '90%';
-button2.style.left = '50%';
-button2.style.transform = 'translate(-50%, -50%)';
-button2.style.padding = '10px 20px';  // Add some padding for a nicer appearance
-button2.style.fontSize = '16px';      // Adjust font size
-button2.style.cursor = 'pointer';  
-
-button2.disabled = true;
-
-const checkUpgradeAvailability = () => {
-    if (counter>=10) {
-        button2.disabled = false;
-        button2.style.cursor = 'pointer';
-        button2.style.backgroundColor = ''; // Restore default color
-    }else{
-        button2.disabled = true;
-    }
-    
-    if(counter>=100){
-        button3.disabled = false;
-        button3.style.cursor = 'pointer';
-        button3.style.backgroundColor = ''; // Restore default color
-    }else{
-        button3.disabled = true;
-    }
-    
+// Function to update the counter
+const updateCounter = () => {
+    counter += currentAdd;
+    counterDiv.innerText = `${counter} launches 🚀`;
 };
 
-const performUpgrades = () =>{
-    counter-=10;
-    currentAdd+=0.1;
+// Create the first button
+const button = document.createElement('button');
+button.innerHTML = "🚀 My button";
+button.id = "funButton";
+button.style.padding = '10px 20px';
+button.style.fontSize = '16px';
+button.style.cursor = 'pointer';
+button.addEventListener('click', updateCounter);
+document.body.appendChild(button);
 
-}
+// Create the upgrade buttons
+const button2 = document.createElement('button');
+button2.id = "upgrade";
+button2.innerHTML = "Upgrade: +0.1 (10 points)";
+document.body.appendChild(button2);
+button2.style.padding = '10px 20px';
+button2.style.fontSize = '16px';
+button2.style.cursor = 'pointer';
 
-button2.addEventListener('click', performUpgrades);
-
-// Create a new button element
 const button3 = document.createElement('button');
-// Optionally set an ID or class if you need to style it later
 button3.id = "upgrade";
 button3.innerHTML = "Upgrade: +2.0 (100 points)";
-
-// Append the button to the body (or to any other container)
 document.body.appendChild(button3);
-button3.style.position = 'absolute';
-button3.style.top = '40%';
-button3.style.left = '50%';
-button3.style.transform = 'translate(-50%, -50%)';
-button3.style.padding = '10px 20px';  // Add some padding for a nicer appearance
-button3.style.fontSize = '16px';      // Adjust font size
-button3.style.cursor = 'pointer';  
-// Create a new button element
+button3.style.padding = '10px 20px';
+button3.style.fontSize = '16px';
+button3.style.cursor = 'pointer';
+
 const button4 = document.createElement('button');
-// Optionally set an ID or class if you need to style it later
 button4.id = "upgrade";
 button4.innerHTML = "Upgrade: +50.0 (1000 points)";
-
-// Append the button to the body (or to any other container)
 document.body.appendChild(button4);
-button4.style.position = 'absolute';
-button4.style.top = '50%';
-button4.style.left = '50%';
-button4.style.transform = 'translate(-50%, -50%)';
-button4.style.padding = '10px 20px';  // Add some padding for a nicer appearance
-button4.style.fontSize = '16px';      // Adjust font size
-button4.style.cursor = 'pointer';  
+button4.style.padding = '10px 20px';
+button4.style.fontSize = '16px';
+button4.style.cursor = 'pointer';
 
+// Function to perform upgrades and track items bought
+const performUpgrades = (cost: number, addValue: number, upgradeKey: keyof typeof upgradesBought) => {
+    if (counter >= cost) {
+        counter -= cost;
+        currentAdd += addValue;
+        upgradesBought[upgradeKey]++; // Increment the number of items bought
+        counterDiv.innerText = `${counter} launches 🚀`;
+        growthRateDiv.innerText = `Current Growth Rate: ${currentAdd.toFixed(1)} 🚀/click`;
+        itemsBoughtDiv.innerText = `Bought: Upgrade1: ${upgradesBought.upgrade1}, Upgrade2: ${upgradesBought.upgrade2}, Upgrade3: ${upgradesBought.upgrade3}`;
+    }
+};
+
+// Add event listeners to upgrade buttons
+button2.addEventListener('click', () => performUpgrades(10, 0.1, 'upgrade1'));  // Costs 10 points, adds 0.1
+button3.addEventListener('click', () => performUpgrades(100, 2.0, 'upgrade2')); // Costs 100 points, adds 2.0
+button4.addEventListener('click', () => performUpgrades(1000, 50.0, 'upgrade3')); // Costs 1000 points, adds 50.0
+
+// Check upgrade availability
+const checkUpgradeAvailability = () => {
+    button2.disabled = counter < 10;
+    button3.disabled = counter < 100;
+    button4.disabled = counter < 1000;
+};
+
+// Call `checkUpgradeAvailability` during each game loop
+let lastTime = 0;
+function incrementCounter(currentTime: number) {
+    if (lastTime !== 0) {
+        const deltaTime = currentTime - lastTime;
+        counter += deltaTime / 1000;
+        counterDiv.innerText = `${counter.toFixed(1)} launches 🚀`;
+        checkUpgradeAvailability();
+    }
+    lastTime = currentTime;
+    requestAnimationFrame(incrementCounter);
+}
+requestAnimationFrame(incrementCounter);
