@@ -1,7 +1,7 @@
 import "./style.css";
 
 const app: HTMLDivElement = document.querySelector("#app")!;
-const gameName = "Clicker game";
+const gameName = "Shitcoin Simulator";
 
 const header = document.createElement("h1");
 header.innerHTML = gameName;
@@ -14,7 +14,7 @@ let currentAdd: number = 1;
 let counter: number = 0;
 let upgradesBought = { upgrade1: 0, upgrade2: 0, upgrade3: 0 }; // Track number of items bought
 let upgradePrices = { upgrade1: 10, upgrade2: 100, upgrade3: 1000 }; // Track number of items bought
-document.title = "Vincent Fu";
+document.title = "Shitcoin Simulator";
 
 // Create display for counter
 const counterDiv = document.createElement('div');
@@ -23,7 +23,7 @@ counterDiv.style.textAlign = 'center';
 counterDiv.style.marginTop = '20px';
 counterDiv.style.fontSize = '18px';
 document.body.appendChild(counterDiv);
-counterDiv.innerText = `${counter} launches 🚀`;
+counterDiv.innerText = `${counter} Shitcoins 🚀`;
 
 // Create display for current growth rate
 const growthRateDiv = document.createElement('div');
@@ -32,7 +32,7 @@ growthRateDiv.style.textAlign = 'center';
 growthRateDiv.style.marginTop = '10px';
 growthRateDiv.style.fontSize = '16px';
 document.body.appendChild(growthRateDiv);
-growthRateDiv.innerText = `Current Growth Rate: ${currentAdd} 🚀/click`;
+growthRateDiv.innerText = `Current Shitcoin Mining Rate: ${currentAdd} 🪙`;
 
 // Create display for items bought
 const itemsBoughtDiv = document.createElement('div');
@@ -41,22 +41,34 @@ itemsBoughtDiv.style.textAlign = 'center';
 itemsBoughtDiv.style.marginTop = '10px';
 itemsBoughtDiv.style.fontSize = '16px';
 document.body.appendChild(itemsBoughtDiv);
-itemsBoughtDiv.innerText = `Bought: Upgrade1: ${upgradesBought.upgrade1}, Upgrade2: ${upgradesBought.upgrade2}, Upgrade3: ${upgradesBought.upgrade3}`;
+itemsBoughtDiv.innerText = `Bought: NVIDIA GTX 1650: ${upgradesBought.upgrade1}, AMD Radeon RX 580: ${upgradesBought.upgrade2}, NVIDIA RTX 4090: ${upgradesBought.upgrade3}`;
 
 // Function to update the counter
 const updateCounter = () => {
     counter += currentAdd;
-    counterDiv.innerText = `${counter} launches 🚀`;
+    counterDiv.innerText = `${counter} Shitcoins 🚀`;
 };
 
-// Create the first button
-const button = document.createElement('button');
-button.innerHTML = "🚀 My button";
-button.id = "funButton";
-button.style.padding = '10px 20px';
-button.style.fontSize = '16px';
-button.style.cursor = 'pointer';
+// Create the clickable PNG button
+const button = document.createElement('img');
+
+// Set the PNG image source
+button.src = "src/17228.png"; // Replace with the actual path to your PNG
+
+// Set the button's styling to make it big and position it at the top
+button.style.width = '300px';  // Adjust width as needed for size
+button.style.height = 'auto';  // Keep the aspect ratio
+button.style.position = 'absolute'; // Use absolute positioning
+button.style.top = '20px';     // Set distance from the top of the screen
+button.style.left = '50%';     // Center horizontally
+button.style.transform = 'translateX(-50%)'; // Adjust to center properly
+button.style.cursor = 'pointer';  // Make it clickable
+
+
+// Add the click event listener
 button.addEventListener('click', updateCounter);
+
+// Append the image to the body
 document.body.appendChild(button);
 
 // Create the upgrade buttons
@@ -93,8 +105,8 @@ const performUpgrades = (addValue: number, upgradeKey: keyof typeof upgradesBoug
         upgradesBought[upgradeKey]++; // Increment the number of items bought
         upgradePrices[upgradeKey] *= priceIncreaseFactor;
         counterDiv.innerText = `${counter} launches 🚀`;
-        growthRateDiv.innerText = `Current Growth Rate: ${currentAdd.toFixed(1)} 🚀/click`;
-        itemsBoughtDiv.innerText = `Bought: Upgrade1: ${upgradesBought.upgrade1}, Upgrade2: ${upgradesBought.upgrade2}, Upgrade3: ${upgradesBought.upgrade3}`;
+        growthRateDiv.innerText = `Current Shitcoin Mining Rate: ${currentAdd.toFixed(1)} 🪙/click`;
+        itemsBoughtDiv.innerText = `NVIDIA GTX 1650: ${upgradesBought.upgrade1}, AMD Radeon RX 580: ${upgradesBought.upgrade2}, NVIDIA RTX 4090: ${upgradesBought.upgrade3}`;
 
         button2.innerHTML = `Upgrade: +0.1 ${upgradePrices["upgrade1"].toFixed(1)}`;
         button3.innerHTML = `Upgrade: +2.0 ${upgradePrices["upgrade2"].toFixed(1)}`;
@@ -109,9 +121,9 @@ button4.addEventListener('click', () => performUpgrades(50.0, 'upgrade3')); // C
 
 // Check upgrade availability
 const checkUpgradeAvailability = () => {
-    button2.disabled = counter < 10;
-    button3.disabled = counter < 100;
-    button4.disabled = counter < 1000;
+    button2.disabled = counter < upgradePrices["upgrade1"];
+    button3.disabled = counter < upgradePrices["upgrade2"];
+    button4.disabled = counter < upgradePrices["upgrade3"];
 };
 
 // Call `checkUpgradeAvailability` during each game loop
@@ -120,7 +132,7 @@ function incrementCounter(currentTime: number) {
     if (lastTime !== 0) {
         const deltaTime = currentTime - lastTime;
         counter += deltaTime / 1000;
-        counterDiv.innerText = `${counter.toFixed(1)} launches 🚀`;
+        counterDiv.innerText = `${counter.toFixed(1)} Shitcoins 🚀`;
         checkUpgradeAvailability();
     }
     lastTime = currentTime;
