@@ -78,7 +78,7 @@ const updateCounter = () => {
 const button = document.createElement('img');
 
 // Set the PNG image source
-button.src = "./assets/img.png"; // Replace with the actual path to your PNG
+button.src = "https://as0mdude.github.io/cmpm-121-demo-1/assets/img.png"; // Replace with the actual path to your PNG
 
 // Set the button's styling to make it big and position it at the top
 button.style.width = '300px';  // Adjust width as needed for size
