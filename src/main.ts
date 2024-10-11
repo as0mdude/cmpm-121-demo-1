@@ -28,7 +28,17 @@ const priceIncreaseFactor = 1.15;
 
 let currentAdd: number = 1;
 let counter: number = 0;
-let upgradesBought = { "NVIDIA GTX 1650": 0, "AMD Radeon RX 580": 0, "NVIDIA RTX 4090": 0, "High-Power Supercomputer": 0, "Quantum Computer": 0 }; // Track number of items bought
+
+interface UpgradesBought {
+    [key: string]: number; // Allow any string as a key with a number value
+  }
+  let upgradesBought: UpgradesBought = {
+    "NVIDIA GTX 1650": 0,
+    "AMD Radeon RX 580": 0,
+    "NVIDIA RTX 4090": 0,
+    "High-Power Supercomputer": 0,
+    "Quantum Computer": 0,
+  };
 document.title = "Shitcoin Simulator";
 
 // Create display for counter
@@ -68,7 +78,7 @@ const updateCounter = () => {
 const button = document.createElement('img');
 
 // Set the PNG image source
-button.src = "src/17228.png"; // Replace with the actual path to your PNG
+button.src = "./src/17228.png"; // Replace with the actual path to your PNG
 
 // Set the button's styling to make it big and position it at the top
 button.style.width = '300px';  // Adjust width as needed for size
