@@ -78,7 +78,7 @@ const updateCounter = () => {
 const button = document.createElement('img');
 
 // Set the PNG image source
-button.src = "./src/17228.png"; // Replace with the actual path to your PNG
+button.src = "./assets/img.png"; // Replace with the actual path to your PNG
 
 // Set the button's styling to make it big and position it at the top
 button.style.width = '300px';  // Adjust width as needed for size
