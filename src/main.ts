@@ -1,5 +1,8 @@
 import "./style.css";
 
+
+
+
 interface Item {
   name: string;
   cost: number;
@@ -78,8 +81,8 @@ const updateCounter = () => {
 const button = document.createElement('img');
 
 // Set the PNG image source
+button.src = "https://s2.coinmarketcap.com/static/img/coins/200x200/17228.png" 
 
-button.src = new URL('./assets/img.png', import.meta.url).href;
 
 // Set the button's styling to make it big and position it at the top
 button.style.width = '300px';  // Adjust width as needed for size
