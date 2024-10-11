@@ -4,14 +4,16 @@ interface Item {
   name: string;
   cost: number;
   rate: number;
-  amount: number;  // New field for tracking the number of items bought
+  description: string; // Added description field
 }
 
-// Available items array
+// Available items array with descriptions
 const availableItems: Item[] = [
-  { name: "NVIDIA GTX 1650", cost: 10, rate: 0.1, amount: 0 },
-  { name: "AMD Radeon RX 580", cost: 100, rate: 2, amount: 0 },
-  { name: "NVIDIA RTX 4090", cost: 1000, rate: 50, amount: 0 },
+  { name: "NVIDIA GTX 1650", cost: 10, rate: 0.1, description: "A budget graphics card that speeds up Shitcoin mining." },
+  { name: "AMD Radeon RX 580", cost: 100, rate: 2, description: "A reliable graphics card for efficient Shitcoin production." },
+  { name: "NVIDIA RTX 4090", cost: 1000, rate: 50, description: "A top-of-the-line card for serious Shitcoin miners!" },
+  { name: "High-Power Supercomputer", cost: 5000, rate: 200, description: "A powerful beast that accelerates Shitcoin mining to new heights." },
+  { name: "Quantum Computer", cost: 15000, rate: 500, description: "An futuristic setup that maximizes your Shitcoin output." },
 ];
 
 const app: HTMLDivElement = document.querySelector("#app")!;
@@ -26,6 +28,7 @@ const priceIncreaseFactor = 1.15;
 
 let currentAdd: number = 1;
 let counter: number = 0;
+let upgradesBought = { "NVIDIA GTX 1650": 0, "AMD Radeon RX 580": 0, "NVIDIA RTX 4090": 0, "High-Power Supercomputer": 0, "Quantum Computer": 0 }; // Track number of items bought
 document.title = "Shitcoin Simulator";
 
 // Create display for counter
@@ -44,7 +47,7 @@ growthRateDiv.style.textAlign = 'center';
 growthRateDiv.style.marginTop = '10px';
 growthRateDiv.style.fontSize = '16px';
 document.body.appendChild(growthRateDiv);
-growthRateDiv.innerText = `Current Shitcoin Mining Rate: ${currentAdd} 🪙`;
+growthRateDiv.innerText = `Current Shitcoin Mining Rate: ${currentAdd} 🪙/click`;
 
 // Create display for items bought
 const itemsBoughtDiv = document.createElement('div');
@@ -53,7 +56,7 @@ itemsBoughtDiv.style.textAlign = 'center';
 itemsBoughtDiv.style.marginTop = '10px';
 itemsBoughtDiv.style.fontSize = '16px';
 document.body.appendChild(itemsBoughtDiv);
-itemsBoughtDiv.innerText = `Bought: NVIDIA GTX 1650: ${availableItems[0].amount}, AMD Radeon RX 580: ${availableItems[1].amount}, NVIDIA RTX 4090: ${availableItems[2].amount}`;
+itemsBoughtDiv.innerText = `Bought: NVIDIA GTX 1650: ${upgradesBought["NVIDIA GTX 1650"]}, AMD Radeon RX 580: ${upgradesBought["AMD Radeon RX 580"]}, NVIDIA RTX 4090: ${upgradesBought["NVIDIA RTX 4090"]}, High-Power Supercomputer: ${upgradesBought["High-Power Supercomputer"]}, Quantum Computer: ${upgradesBought["Quantum Computer"]}`;
 
 // Function to update the counter
 const updateCounter = () => {
@@ -88,12 +91,12 @@ const performUpgrades = (item: Item) => {
   if (counter >= cost) {
     counter -= cost;
     currentAdd += item.rate;
-    item.amount++;  // Increment the number of items bought
-    item.cost *= priceIncreaseFactor;  // Increase cost for the next purchase
+    upgradesBought[item.name]++; // Increment the number of items bought
+    item.cost *= priceIncreaseFactor; // Increase cost for next purchase
 
     counterDiv.innerText = `${counter} launches 🚀`;
-    growthRateDiv.innerText = `Current Shitcoin Mining Rate: ${currentAdd.toFixed(1)} 🪙`;
-    itemsBoughtDiv.innerText = `Bought: NVIDIA GTX 1650: ${availableItems[0].amount}, AMD Radeon RX 580: ${availableItems[1].amount}, NVIDIA RTX 4090: ${availableItems[2].amount}`;
+    growthRateDiv.innerText = `Current Shitcoin Mining Rate: ${currentAdd.toFixed(1)} 🪙/click`;
+    itemsBoughtDiv.innerText = `Bought: NVIDIA GTX 1650: ${upgradesBought["NVIDIA GTX 1650"]}, AMD Radeon RX 580: ${upgradesBought["AMD Radeon RX 580"]}, NVIDIA RTX 4090: ${upgradesBought["NVIDIA RTX 4090"]}, High-Power Supercomputer: ${upgradesBought["High-Power Supercomputer"]}, Quantum Computer: ${upgradesBought["Quantum Computer"]}`;
 
     updateUpgradeButtons();
   }
@@ -102,7 +105,7 @@ const performUpgrades = (item: Item) => {
 // Function to create upgrade buttons dynamically
 const createUpgradeButton = (item: Item) => {
   const button = document.createElement('button');
-  button.innerHTML = `Upgrade: +${item.rate} (${item.cost})`;
+  button.innerHTML = `Upgrade: +${item.rate} ${item.cost.toFixed(1)}<br>${item.description}`;
   button.style.padding = '10px 20px';
   button.style.fontSize = '16px';
   button.style.cursor = 'pointer';
@@ -121,7 +124,7 @@ availableItems.forEach(createUpgradeButton);
 const updateUpgradeButtons = () => {
   document.querySelectorAll('button').forEach((button, index) => {
     const item = availableItems[index];
-    button.innerHTML = `Upgrade: +${item.rate} (${item.cost.toFixed(1)})`;  // Update cost and rate
+    button.innerHTML = `Upgrade: +${item.rate} ${item.cost.toFixed(1)}<br>${item.description}`;
   });
 };
 
