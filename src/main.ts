@@ -29,7 +29,7 @@ app.append(header);
 // Price multiplier
 const priceIncreaseFactor = 1.15;
 
-let currentAdd: number = 1;
+let currentNumPerClick: number = 1;
 let counter: number = 0;
 
 interface UpgradesBought {
@@ -60,7 +60,7 @@ growthRateDiv.style.textAlign = 'center';
 growthRateDiv.style.marginTop = '10px';
 growthRateDiv.style.fontSize = '16px';
 document.body.appendChild(growthRateDiv);
-growthRateDiv.innerText = `Current Shitcoin Mining Rate: ${currentAdd} 🪙/click`;
+growthRateDiv.innerText = `Current Shitcoin Mining Rate: ${currentNumPerClick} 🪙/click`;
 
 // Create display for items bought
 const itemsBoughtDiv = document.createElement('div');
@@ -73,7 +73,7 @@ itemsBoughtDiv.innerText = `Bought: NVIDIA GTX 1650: ${upgradesBought["NVIDIA GT
 
 // Function to update the counter
 const updateCounter = () => {
-  counter += currentAdd;
+  counter += currentNumPerClick;
   counterDiv.innerText = `${counter} Shitcoins 🚀`;
 };
 
@@ -104,12 +104,12 @@ const performUpgrades = (item: Item) => {
   let cost = item.cost;
   if (counter >= cost) {
     counter -= cost;
-    currentAdd += item.rate;
+    currentNumPerClick += item.rate;
     upgradesBought[item.name]++; // Increment the number of items bought
     item.cost *= priceIncreaseFactor; // Increase cost for next purchase
 
     counterDiv.innerText = `${counter} launches 🚀`;
-    growthRateDiv.innerText = `Current Shitcoin Mining Rate: ${currentAdd.toFixed(1)} 🪙/click`;
+    growthRateDiv.innerText = `Current Shitcoin Mining Rate: ${currentNumPerClick.toFixed(1)} 🪙/click`;
     itemsBoughtDiv.innerText = `Bought: NVIDIA GTX 1650: ${upgradesBought["NVIDIA GTX 1650"]}, AMD Radeon RX 580: ${upgradesBought["AMD Radeon RX 580"]}, NVIDIA RTX 4090: ${upgradesBought["NVIDIA RTX 4090"]}, High-Power Supercomputer: ${upgradesBought["High-Power Supercomputer"]}, Quantum Computer: ${upgradesBought["Quantum Computer"]}`;
 
     updateUpgradeButtons();
