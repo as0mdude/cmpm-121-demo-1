@@ -27,7 +27,7 @@ header.innerHTML = gameName;
 app.append(header);
 
 // Price multiplier
-const priceIncreaseFactor = 1.15;
+const PRICE_INCREASE_FACTOR = 1.15;
 
 let currentNumPerClick: number = 1;
 let counter: number = 0;
@@ -99,20 +99,23 @@ button.addEventListener('click', updateCounter);
 // Append the image to the body
 document.body.appendChild(button);
 
-// Function to perform upgrades and track items bought
+const updateUIAfterUpgrade = () => {
+  counterDiv.innerText = `${counter} Shitcoins 🚀`;
+  growthRateDiv.innerText = `Current Shitcoin Mining Rate: ${currentNumPerClick.toFixed(1)} 🪙/click`;
+  itemsBoughtDiv.innerText = `Bought: NVIDIA GTX 1650: ${upgradesBought["NVIDIA GTX 1650"]}, AMD Radeon RX 580: ${upgradesBought["AMD Radeon RX 580"]}, NVIDIA RTX 4090: ${upgradesBought["NVIDIA RTX 4090"]}, High-Power Supercomputer: ${upgradesBought["High-Power Supercomputer"]}, Quantum Computer: ${upgradesBought["Quantum Computer"]}`;
+
+  updateUpgradeButtons();
+};
+
 const performUpgrades = (item: Item) => {
-  let cost = item.cost;
+  const cost = item.cost;
   if (counter >= cost) {
     counter -= cost;
     currentNumPerClick += item.rate;
-    upgradesBought[item.name]++; // Increment the number of items bought
-    item.cost *= priceIncreaseFactor; // Increase cost for next purchase
+    upgradesBought[item.name]++;
+    item.cost *= PRICE_INCREASE_FACTOR;
 
-    counterDiv.innerText = `${counter} launches 🚀`;
-    growthRateDiv.innerText = `Current Shitcoin Mining Rate: ${currentNumPerClick.toFixed(1)} 🪙/click`;
-    itemsBoughtDiv.innerText = `Bought: NVIDIA GTX 1650: ${upgradesBought["NVIDIA GTX 1650"]}, AMD Radeon RX 580: ${upgradesBought["AMD Radeon RX 580"]}, NVIDIA RTX 4090: ${upgradesBought["NVIDIA RTX 4090"]}, High-Power Supercomputer: ${upgradesBought["High-Power Supercomputer"]}, Quantum Computer: ${upgradesBought["Quantum Computer"]}`;
-
-    updateUpgradeButtons();
+    updateUIAfterUpgrade();
   }
 };
 
