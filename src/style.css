@@ -5,7 +5,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #a77200;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -26,14 +26,18 @@ a:hover {
 body {
   margin: 0;
   display: flex;
-  place-items: center;
+  justify-content: center;
+  align-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background-color: var(--background-color);
 }
 
 h1 {
-  font-size: 3.2em;
+  font-size: 2.8em;
   line-height: 1.1;
+  margin-bottom: 20px;
+  color: #ffd900;
 }
 
 #app {
@@ -44,22 +48,50 @@ h1 {
 }
 
 button {
+  width: 100%; /* Makes buttons take the full width */
+  margin: 10px 0; /* Space between buttons */
   border-radius: 8px;
   border: 1px solid transparent;
-  padding: 0.6em 1.2em;
+  padding: 0.8em 1.2em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #493000;
+  color: #ffd900;
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: border-color 0.25s, background-color 0.25s;
 }
 button:hover {
   border-color: #646cff;
+  background-color: #333333;
 }
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+/* Counter and Rate Display Styles */
+#counterDisplay,
+#growthRateDisplay,
+#itemsBoughtDisplay {
+  margin: 10px 0;
+  font-size: 1.2em;
+  color: #ffd900;
+}
+
+#counterDisplay {
+  font-size: 1.4em;
+  font-weight: 600;
+  color: #ffd900;
+}
+
+/* Upgrade Button Container */
+#upgradeContainer {
+  display: flex; /* Use flex for layout */
+  flex-direction: column; /* Stack buttons vertically */
+  align-items: stretch; /* Stretch buttons to full width */
+  gap: 10px; /* Space between buttons */
+  margin: 20px auto; /* Center the container */
 }
 
 @media (prefers-color-scheme: light) {
@@ -72,5 +104,17 @@ button:focus-visible {
   }
   button {
     background-color: #f9f9f9;
+    color: #213547;
   }
+  #counterDisplay {
+    color: #ffd900;
+  }
+}
+
+/* Image Button Styling */
+img {
+  max-width: 100%;
+  height: auto;
+  margin: 20px 0;
+  cursor: pointer;
 }

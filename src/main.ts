@@ -1,8 +1,5 @@
 import "./style.css";
 
-
-
-
 interface Item {
   name: string;
   cost: number;
@@ -16,12 +13,11 @@ const availableItems: Item[] = [
   { name: "AMD Radeon RX 580", cost: 100, rate: 2, description: "A reliable graphics card for efficient Shitcoin production." },
   { name: "NVIDIA RTX 4090", cost: 1000, rate: 50, description: "A top-of-the-line card for serious Shitcoin miners!" },
   { name: "High-Power Supercomputer", cost: 5000, rate: 200, description: "A powerful beast that accelerates Shitcoin mining to new heights." },
-  { name: "Quantum Computer", cost: 15000, rate: 500, description: "An futuristic setup that maximizes your Shitcoin output." },
+  { name: "Quantum Computer", cost: 15000, rate: 500, description: "A futuristic setup that maximizes your Shitcoin output." },
 ];
 
 const app: HTMLDivElement = document.querySelector("#app")!;
 const gameName = "Shitcoin Simulator";
-
 const header = document.createElement("h1");
 header.innerHTML = gameName;
 app.append(header);
@@ -33,15 +29,17 @@ let currentNumPerClick: number = 1;
 let counter: number = 0;
 
 interface UpgradesBought {
-    [key: string]: number; // Allow any string as a key with a number value
-  }
-  let upgradesBought: UpgradesBought = {
-    "NVIDIA GTX 1650": 0,
-    "AMD Radeon RX 580": 0,
-    "NVIDIA RTX 4090": 0,
-    "High-Power Supercomputer": 0,
-    "Quantum Computer": 0,
-  };
+  [key: string]: number; // Allow any string as a key with a number value
+}
+
+let upgradesBought: UpgradesBought = {
+  "NVIDIA GTX 1650": 0,
+  "AMD Radeon RX 580": 0,
+  "NVIDIA RTX 4090": 0,
+  "High-Power Supercomputer": 0,
+  "Quantum Computer": 0,
+};
+
 document.title = "Shitcoin Simulator";
 
 // Create display for counter
@@ -81,8 +79,7 @@ const updateCounter = () => {
 const button = document.createElement('img');
 
 // Set the PNG image source
-button.src = "https://s2.coinmarketcap.com/static/img/coins/200x200/17228.png" 
-
+button.src = "https://s2.coinmarketcap.com/static/img/coins/200x200/17228.png";
 
 // Set the button's styling to make it big and position it at the top
 button.style.width = '300px';  // Adjust width as needed for size
@@ -126,20 +123,28 @@ const createUpgradeButton = (item: Item) => {
   button.style.padding = '10px 20px';
   button.style.fontSize = '16px';
   button.style.cursor = 'pointer';
+  button.style.width = '100%'; // Ensure button takes full width
 
   // Add event listener for the upgrade
   button.addEventListener('click', () => performUpgrades(item));
 
-  document.body.appendChild(button);
   return button;
 };
 
-// Create all upgrade buttons from available items
-availableItems.forEach(createUpgradeButton);
+// Create upgrade container for vertical layout
+const upgradeContainer = document.createElement('div');
+upgradeContainer.id = 'upgradeContainer';
+document.body.appendChild(upgradeContainer);
+
+// Create all upgrade buttons from available items and append them to the container
+availableItems.forEach(item => {
+  const button = createUpgradeButton(item);
+  upgradeContainer.appendChild(button);
+});
 
 // Function to update the text on upgrade buttons after a purchase
 const updateUpgradeButtons = () => {
-  document.querySelectorAll('button').forEach((button, index) => {
+  upgradeContainer.querySelectorAll('button').forEach((button, index) => {
     const item = availableItems[index];
     button.innerHTML = `Upgrade: +${item.rate} ${item.cost.toFixed(1)}<br>${item.description}`;
   });
@@ -147,7 +152,7 @@ const updateUpgradeButtons = () => {
 
 // Check upgrade availability and disable buttons
 const checkUpgradeAvailability = () => {
-  document.querySelectorAll('button').forEach((button, index) => {
+  upgradeContainer.querySelectorAll('button').forEach((button, index) => {
     const item = availableItems[index];
     button.disabled = counter < item.cost;
   });
